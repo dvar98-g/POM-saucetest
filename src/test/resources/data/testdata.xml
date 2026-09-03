@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdata>
+
+    <login>
+        <validUser>
+            <username>standard_user</username>
+            <password>secret_sauce</password>
+        </validUser>
+
+        <invalidUser>
+            <username></username>
+            <password>secret_sauce</password>
+            <expectedError>Epic sadface: Username is required</expectedError>
+        </invalidUser>
+    </login>
+
+</testdata>
