@@ -43,6 +43,31 @@ public final class ConfigReader {
     }
 
     /**
+     * Obtiene la pausa (en milisegundos) a esperar después de cada acción sobre la UI
+     * (click, escribir), útil para ver el test correr más despacio y seguirlo visualmente.
+     * Es opcional: si no está definida ni como variable de entorno ni como propiedad,
+     * se asume 0 (sin pausa), para no afectar corridas en CI por defecto.
+     * Variable de entorno: ACTION_DELAY_MILLIS. Propiedad: action.delay.millis.
+     */
+    public static long getActionDelayMillis() {
+        return Long.parseLong(getOptionalValue("ACTION_DELAY_MILLIS", "action.delay.millis", "0"));
+    }
+
+    /**
+     * Igual que getValue, pero devuelve un valor por defecto en vez de lanzar error
+     * cuando no se encuentra ni la variable de entorno ni la propiedad.
+     */
+    private static String getOptionalValue(String envVarName, String propertyName, String defaultValue) {
+        String envValue = System.getenv(envVarName);
+        if (envValue != null && !envValue.isBlank()) {
+            return envValue;
+        }
+
+        String propertyValue = getProperties().getProperty(propertyName);
+        return (propertyValue == null || propertyValue.isBlank()) ? defaultValue : propertyValue;
+    }
+
+    /**
      * Resuelve un valor de configuración: primero busca la variable de entorno,
      * y si no está definida, cae a la propiedad equivalente en config.properties.
      *

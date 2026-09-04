@@ -1,13 +1,11 @@
 package com.qa.testing.saucetest.pages;
 
+import com.qa.testing.saucetest.utils.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-
-
 
 import java.time.Duration;
 
@@ -16,15 +14,13 @@ import java.time.Duration;
  * Centraliza la inicialización del driver, los elementos anotados con @FindBy
  * y las esperas explícitas necesarias antes de interactuar con la UI.
  */
-public class BasePage {
-
-    private static final int DEFAULT_TIMEOUT_SECONDS = 10;
+public abstract class BasePage {
 
     protected final WebDriver driver;
     protected final WebDriverWait wait;
 
     protected BasePage(WebDriver driver) {
-        this(driver, DEFAULT_TIMEOUT_SECONDS);
+        this(driver, ConfigReader.getDefaultTimeoutSeconds());
     }
 
     protected BasePage(WebDriver driver, int timeoutSeconds) {
@@ -55,6 +51,7 @@ public class BasePage {
         WebElement visibleElement = waitForVisibility(element);
         visibleElement.clear();
         visibleElement.sendKeys(text);
+        pauseForVisibility();
     }
 
     /**
@@ -62,7 +59,24 @@ public class BasePage {
      */
     protected void click(WebElement element) {
         waitForClickable(element).click();
+        pauseForVisibility();
     }
 
-
+    /**
+     * Pausa configurable tras una acción de UI, solo para poder seguir el test
+     * visualmente más despacio (ej. en demos o depuración manual). No es una
+     * espera de sincronización: la duración se controla en config.properties
+     * (action.delay.millis) y por defecto es 0, sin efecto en la ejecución.
+     */
+    protected void pauseForVisibility() {
+        long delayMillis = ConfigReader.getActionDelayMillis();
+        if (delayMillis <= 0) {
+            return;
+        }
+        try {
+            Thread.sleep(delayMillis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }
