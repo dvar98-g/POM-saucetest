@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CartSuite" verbose="1">
+
+    <test name="CartTests">
+        <classes>
+            <class name="com.qa.testing.saucetest.tests.cart.CartTest"/>
+        </classes>
+    </test>
+
+</suite>
