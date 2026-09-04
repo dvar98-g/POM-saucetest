@@ -25,6 +25,11 @@ public final class DriveFactory {
      * que de otro modo muestran un popup nativo que bloquea la interacción
      * al escribir credenciales en formularios de login.
      *
+     * La ventana se maximiza vía el argumento --start-maximized (en vez de
+     * driver.manage().window().maximize()), ya que ese método usa el protocolo
+     * CDP para maximizar y falla con "Runtime.evaluate wasn't found" en entornos
+     * con pantalla virtual como Xvfb (usado en CI/GitHub Actions).
+     *
      * @return instancia de WebDriver configurada
      */
     public static WebDriver createDriver() {
@@ -37,11 +42,9 @@ public final class DriveFactory {
         );
         options.setExperimentalOption("prefs", prefs);
         options.addArguments("--disable-features=PasswordLeakDetection,AutofillServerCommunication");
+        options.addArguments("--start-maximized");
 
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-
-        return driver;
+        return new ChromeDriver(options);
     }
 
     /**
