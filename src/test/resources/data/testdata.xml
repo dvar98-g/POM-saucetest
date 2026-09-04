@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdata>
+
+    <login>
+        <validUser>
+            <username>standard_user</username>
+            <password>secret_sauce</password>
+        </validUser>
+
+        <invalidUser>
+            <username></username>
+            <password>secret_sauce</password>
+            <expectedError>Epic sadface: Username is required</expectedError>
+        </invalidUser>
+    </login>
+
+    <checkout>
+        <shippingInfo>
+            <firstName>John</firstName>
+            <lastName>Doe</lastName>
+            <postalCode>12345</postalCode>
+        </shippingInfo>
+
+        <expectedConfirmationMessage>Thank you for your order!</expectedConfirmationMessage>
+    </checkout>
+
+    <cart>
+        <availableProducts>
+            <product>Sauce Labs Backpack</product>
+            <product>Sauce Labs Bike Light</product>
+            <product>Sauce Labs Bolt T-Shirt</product>
+            <product>Sauce Labs Fleece Jacket</product>
+            <product>Sauce Labs Onesie</product>
+            <product>Test.allTheThings() T-Shirt (Red)</product>
+        </availableProducts>
+    </cart>
+
+</testdata>
