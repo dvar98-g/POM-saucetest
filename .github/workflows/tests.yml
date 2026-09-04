@@ -1,0 +1,47 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [login, checkout, cart, logout]
+
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      DEFAULT_TIMEOUT_SECONDS: ${{ secrets.DEFAULT_TIMEOUT_SECONDS }}
+      # ACTION_DELAY_MILLIS no se define: por defecto es 0 (sin pausa visual),
+      # ya que en CI no tiene sentido ralentizar la ejecución.
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Instalar Xvfb (pantalla virtual para Chrome)
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Correr tests del módulo ${{ matrix.suite }}
+        run: xvfb-run --auto-servernum mvn test -Dsurefire.suiteXmlFiles=src/test/resources/suites/${{ matrix.suite }}.xml
+
+      - name: Publicar reportes de Surefire - ${{ matrix.suite }}
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-${{ matrix.suite }}
+          path: target/surefire-reports/
+          retention-days: 7
