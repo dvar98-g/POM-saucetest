@@ -16,8 +16,8 @@ jobs:
         suite: [login, checkout, cart, logout]
 
     env:
-      BASE_URL: https://www.saucedemo.com/
-      DEFAULT_TIMEOUT_SECONDS: 10
+      BASE_URL: ${{ secrets.BASE_URL }}
+      DEFAULT_TIMEOUT_SECONDS: ${{ secrets.DEFAULT_TIMEOUT_SECONDS }}
       # ACTION_DELAY_MILLIS no se define: por defecto es 0 (sin pausa visual),
       # ya que en CI no tiene sentido ralentizar la ejecución.
 
