@@ -1,4 +1,4 @@
-package com.qa.testing.saucetest.pages.checkout;
+package com.qa.testing.saucetest.pages.cart;
 
 import com.qa.testing.saucetest.pages.BasePage;
 import org.openqa.selenium.By;
