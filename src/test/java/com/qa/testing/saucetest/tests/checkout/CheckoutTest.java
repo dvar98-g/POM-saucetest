@@ -1,11 +1,12 @@
 package com.qa.testing.saucetest.tests.checkout;
 
-import com.qa.testing.saucetest.pages.checkout.CartPage;
+import com.qa.testing.saucetest.pages.cart.CartPage;
+import com.qa.testing.saucetest.pages.cart.InventoryPage;
 import com.qa.testing.saucetest.pages.checkout.CheckoutCompletePage;
 import com.qa.testing.saucetest.pages.checkout.CheckoutStepOnePage;
 import com.qa.testing.saucetest.pages.checkout.CheckoutStepTwoPage;
-import com.qa.testing.saucetest.pages.cart.InventoryPage;
 import com.qa.testing.saucetest.tests.LoggedInBaseTest;
+import com.qa.testing.saucetest.utils.RandomUtils;
 import com.qa.testing.saucetest.utils.TestDataReader;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,13 +16,17 @@ import java.util.List;
 /**
  * Casos de prueba del flujo de checkout completo de SauceDemo:
  * carrito → información de envío → confirmación.
- * Por ahora solo cubre el camino feliz (checkout exitoso).
+ * Por ahora solo cubre el camino feliz (checkout exitoso), con productos
+ * elegidos al azar desde el catálogo disponible.
  */
-public class LoggedInTest extends LoggedInBaseTest {
+public class CheckoutTest extends LoggedInBaseTest {
 
-    @Test(description = "Checkout completo con 2 o más productos debe finalizar con mensaje de confirmación")
-    public void checkoutConVariosProductosDeberiaCompletarseExitosamente() {
-        List<String> products = TestDataReader.getValues("checkout/products", "product");
+    private static final int PRODUCTS_TO_PURCHASE = 2;
+
+    @Test(description = "Checkout completo con productos aleatorios debe finalizar con mensaje de confirmación")
+    public void checkoutConProductosAleatoriosDeberiaCompletarseExitosamente() {
+        List<String> availableProducts = TestDataReader.getValues("cart/availableProducts", "product");
+        List<String> randomProducts = RandomUtils.pickRandom(availableProducts, PRODUCTS_TO_PURCHASE);
 
         String firstName = TestDataReader.getValue("checkout/shippingInfo", "firstName");
         String lastName = TestDataReader.getValue("checkout/shippingInfo", "lastName");
@@ -29,7 +34,7 @@ public class LoggedInTest extends LoggedInBaseTest {
         String expectedConfirmationMessage = TestDataReader.getValue("checkout", "expectedConfirmationMessage");
 
         InventoryPage inventoryPage = new InventoryPage(driver);
-        for (String product : products) {
+        for (String product : randomProducts) {
             inventoryPage.addProductToCart(product);
         }
         inventoryPage.goToCart();

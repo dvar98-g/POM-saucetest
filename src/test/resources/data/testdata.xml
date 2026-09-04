@@ -15,11 +15,6 @@
     </login>
 
     <checkout>
-        <products>
-            <product>Sauce Labs Backpack</product>
-            <product>Sauce Labs Bike Light</product>
-        </products>
-
         <shippingInfo>
             <firstName>John</firstName>
             <lastName>Doe</lastName>
@@ -28,5 +23,16 @@
 
         <expectedConfirmationMessage>Thank you for your order!</expectedConfirmationMessage>
     </checkout>
+
+    <cart>
+        <availableProducts>
+            <product>Sauce Labs Backpack</product>
+            <product>Sauce Labs Bike Light</product>
+            <product>Sauce Labs Bolt T-Shirt</product>
+            <product>Sauce Labs Fleece Jacket</product>
+            <product>Sauce Labs Onesie</product>
+            <product>Test.allTheThings() T-Shirt (Red)</product>
+        </availableProducts>
+    </cart>
 
 </testdata>
