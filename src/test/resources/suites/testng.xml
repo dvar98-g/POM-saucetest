@@ -8,4 +8,22 @@
         </classes>
     </test>
 
+    <test name="CheckoutTests">
+        <classes>
+            <class name="com.qa.testing.saucetest.tests.checkout.CheckoutTest"/>
+        </classes>
+    </test>
+
+    <test name="CartTests">
+        <classes>
+            <class name="com.qa.testing.saucetest.tests.cart.CartTest"/>
+        </classes>
+    </test>
+
+    <test name="LogoutTests">
+        <classes>
+            <class name="com.qa.testing.saucetest.tests.logout.LogoutTest"/>
+        </classes>
+    </test>
+
 </suite>

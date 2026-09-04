@@ -1,6 +1,6 @@
 package com.qa.testing.saucetest.tests.login;
 
-import com.qa.testing.saucetest.pages.LoginPage;
+import com.qa.testing.saucetest.pages.login.LoginPage;
 import com.qa.testing.saucetest.tests.BaseTest;
 import com.qa.testing.saucetest.utils.TestDataReader;
 import org.testng.Assert;

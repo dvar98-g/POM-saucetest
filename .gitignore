@@ -174,3 +174,4 @@ $RECYCLE.BIN/
 *.ipr
 *.iws
 out/
+config.properties
